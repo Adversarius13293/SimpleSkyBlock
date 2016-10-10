@@ -1,0 +1,16 @@
+[
+{
+  "modid": "simpleSkyBlock",
+  "name": "Simple Sky Block",
+  "description": "Example placeholder mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Adversarius13293"],
+  "credits": "Just me",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
