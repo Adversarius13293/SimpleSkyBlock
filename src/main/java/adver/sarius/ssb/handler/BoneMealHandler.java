@@ -3,10 +3,8 @@ package adver.sarius.ssb.handler;
 import java.util.Random;
 
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -21,11 +19,14 @@ public class BoneMealHandler {
 	
 	@SubscribeEvent
 	public void onBoneMealUse(BonemealEvent event){
+		World world = event.getWorld();
+		if(world.isRemote){ // doesnt work correctly otherwise. ghostblocks
+			return;
+		}
 		// taken from BlockGrass.grow()
 		if(event.getBlock().getBlock() instanceof BlockDirt && 
 				event.getBlock().getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.PODZOL){
 			event.setResult(Result.ALLOW);
-			World world = event.getWorld();
 			
 			for(int i = 0; i < 128; i++){
 				BlockPos position = event.getPos().up();
@@ -55,10 +56,9 @@ public class BoneMealHandler {
 			}
 		} else if(event.getBlock().getBlock() instanceof BlockSand){
 			event.setResult(Result.ALLOW);
-			World world = event.getWorld();
 			BlockPos position = event.getPos().up();
 			
-			if(random.nextInt(10) < 8){
+			if(random.nextInt(10) < 6){
 				IBlockState blockState = Blocks.DEADBUSH.getDefaultState();
 				if(Blocks.DEADBUSH.canBlockStay(world, position, blockState)){
 					world.setBlockState(position, blockState);

@@ -1,7 +1,7 @@
 [
 {
-  "modid": "simpleSkyBlock",
-  "name": "Simple Sky Block",
+  "modid": "simpleskyblock",
+  "name": "SimpleSkyBlock",
   "description": "Example placeholder mod.",
   "version": "${version}",
   "mcversion": "${mcversion}",

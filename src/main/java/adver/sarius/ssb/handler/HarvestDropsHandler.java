@@ -11,6 +11,7 @@ public class HarvestDropsHandler {
 		
 	@SubscribeEvent
 	public void onHarvestDrops(HarvestDropsEvent event){
+		// only triggers on not remote
 		if(event.getState().getBlock() == Blocks.GRAVEL && !event.isSilkTouching()){
 			EntityPlayer player = event.getHarvester();
 			if(player != null){

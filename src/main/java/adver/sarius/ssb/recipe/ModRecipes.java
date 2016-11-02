@@ -5,7 +5,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class ModRecipes {
@@ -16,7 +15,7 @@ public class ModRecipes {
 		final ItemStack stone = new ItemStack(Blocks.STONE, 1, 0);
 		final ItemStack dirt = new ItemStack(Blocks.DIRT, 1, 0);
 		final ItemStack eggSpider = new ItemStack(Items.SPAWN_EGG);
-		ItemMonsterPlacer.applyEntityIdToItemStack(eggSpider, "Spider");
+		ItemMonsterPlacer.applyEntityIdToItemStack(eggSpider, "Spider"); // TODO: doesnt work on serverside
 		final ItemStack eggZombie = new ItemStack(Items.SPAWN_EGG);
 		ItemMonsterPlacer.applyEntityIdToItemStack(eggZombie, "Zombie");
 		final ItemStack eggSkeleton = new ItemStack(Items.SPAWN_EGG);
@@ -50,7 +49,5 @@ public class ModRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.DIAMOND_ORE), "DDD","DSD","DDD", 'D', Items.DIAMOND, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.REDSTONE_ORE), "RSR", 'R', Blocks.REDSTONE_BLOCK, 'S', stone);
 		
-		
 	}
-
 }
