@@ -11,6 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
+/**
+ * Just a test class. Remove if not needed anymore.
+ */
 public class CommandTesting extends CommandBase{
 
 	@Override
@@ -46,5 +49,4 @@ public class CommandTesting extends CommandBase{
 		}
 		
 	}
-
 }

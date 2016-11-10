@@ -11,7 +11,7 @@ public class ModRecipes {
 	
 	public static void init(){
 		
-		// TODO: auslagern?
+		// TODO: place somewhere else?
 		final ItemStack stone = new ItemStack(Blocks.STONE, 1, 0);
 		final ItemStack dirt = new ItemStack(Blocks.DIRT, 1, 0);
 		final ItemStack eggSpider = new ItemStack(Items.SPAWN_EGG);
@@ -22,7 +22,7 @@ public class ModRecipes {
 		ItemMonsterPlacer.applyEntityIdToItemStack(eggSkeleton, "Skeleton");
 		final ItemStack eggCave = new ItemStack(Items.SPAWN_EGG);
 		ItemMonsterPlacer.applyEntityIdToItemStack(eggCave, "CaveSpider");
-		// TODO: Auf Dictionary Items umsteigen? (OreDictionary)
+		// TODO: use Dictionary Items everywhere? (OreDictionary)
 		
 		// Spawn eggs
 		GameRegistry.addShapedRecipe(eggSpider, "###", "#X#", "###", '#', Items.SPIDER_EYE, 'X', Items.NETHER_STAR);
@@ -40,7 +40,7 @@ public class ModRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.MYCELIUM), "RB", "DD", 'R', Blocks.RED_MUSHROOM_BLOCK, 'B', Blocks.BROWN_MUSHROOM_BLOCK, 'D', Blocks.DIRT);
 		
 		// Ores
-		// TODO: Mehr Shapes?
+		// TODO: more Shapes?
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.EMERALD_ORE), "EEE","ESE","EEE", 'E', Blocks.EMERALD_BLOCK, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.GOLD_ORE), " G ","GSG"," G ", 'G', Items.GOLD_INGOT, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.IRON_ORE), " I ","ISI"," I ", 'I', Items.IRON_INGOT, 'S', stone);
@@ -48,6 +48,5 @@ public class ModRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.LAPIS_ORE), "L L","LSL","L L", 'L', Blocks.LAPIS_BLOCK, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.DIAMOND_ORE), "DDD","DSD","DDD", 'D', Items.DIAMOND, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.REDSTONE_ORE), "RSR", 'R', Blocks.REDSTONE_BLOCK, 'S', stone);
-		
 	}
 }

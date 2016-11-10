@@ -16,10 +16,9 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfessio
 
 public class VillagerTradingChanger {
 
-	
 	public static void registerVillager(){
 
-		// change this for 1.11
+		// TODO: change this for 1.11
 		VillagerProfession prof = new VillagerProfession(SkyBlockMod.MODID + ":nitwit",
                 "minecraft:textures/entity/villager/villager.png",
                 "minecraft:textures/entity/zombie_villager/zombie_villager.png");

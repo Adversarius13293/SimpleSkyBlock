@@ -1,4 +1,4 @@
-package adver.sarius.ssb.generation;
+package adver.sarius.ssb.gen;
 
 import java.util.Random;
 
@@ -64,6 +64,7 @@ public class SSBWorldGenerator{
 //		WorldProviderSurface
 //		ChunkProviderOverworld
 //		ChunkProviderHell
+//		WorldProviderSurface
 		
 	}
 	
@@ -81,7 +82,16 @@ public class SSBWorldGenerator{
 	private final Random random = new Random();
 	
 	@SubscribeEvent
-	public void event4(DecorateBiomeEvent.Post event){
+	public void event4(DecorateBiomeEvent.Pre event){ // post
+		
+		// Prevent fossils. And everything else because it cant generate anyways.
+		if(event.getWorld().provider.getDimensionType() == DimensionType.OVERWORLD){
+			event.setCanceled(true);
+		}
+		if(true)return;
+		
+		//////// Moving into normal world generation
+		
 		// auf chunk null und block null testen?
 		if(event.getWorld().provider.getDimensionType() == DimensionType.NETHER){
 			

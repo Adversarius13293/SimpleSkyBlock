@@ -20,7 +20,7 @@ public class LootTableHandler {
 	@SubscribeEvent
 	public void OnLootTablesLoaded(LootTableLoadEvent event){
 		if (event.getName().equals(LootTableList.ENTITIES_CAVE_SPIDER)) {
-			// TODO: Was, wenn es den Pool schon von nem anderen mod gibt?
+			// TODO: name already in use?
 			LootPool pool = new LootPool(new LootEntryItem[]{new LootEntryItem(Item.getItemFromBlock(Blocks.WEB), 1, 0, new LootFunction[0], new LootCondition[0], Blocks.WEB.getRegistryName().toString())}, 
 						new LootCondition[]{new KilledByPlayer(false), new RandomChanceWithLooting(0.925f, 0.01f)}, new RandomValueRange(1), new RandomValueRange(0), "pool2");
 			event.getTable().addPool(pool);
