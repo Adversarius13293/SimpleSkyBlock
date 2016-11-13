@@ -27,6 +27,7 @@ import adver.sarius.ssb.gen.structure.MapGenScatteredFeatureSSB;
 import adver.sarius.ssb.gen.structure.MapGenStrongholdSSB;
 import adver.sarius.ssb.gen.structure.StructureOceanMonumentSSB;
 
+//copied the vanilla class and modified it
 public class ChunkProviderOverworldSSB implements IChunkGenerator
 {
     private final Random rand;
@@ -139,6 +140,8 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
                 this.oceanMonumentGenerator.generate(this.worldObj, x, z, chunkprimer);
             }
         }
+        
+        
 
         Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
         // Needed to instantly use the correct biome

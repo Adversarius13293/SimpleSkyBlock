@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class LootTableHandler {
 	
 	@SubscribeEvent
-	public void OnLootTablesLoaded(LootTableLoadEvent event){
+	public void onLootTablesLoaded(LootTableLoadEvent event){
 		if (event.getName().equals(LootTableList.ENTITIES_CAVE_SPIDER)) {
 			// TODO: name already in use?
 			LootPool pool = new LootPool(new LootEntryItem[]{new LootEntryItem(Item.getItemFromBlock(Blocks.WEB), 1, 0, new LootFunction[0], new LootCondition[0], Blocks.WEB.getRegistryName().toString())}, 

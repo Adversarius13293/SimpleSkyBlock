@@ -38,14 +38,20 @@ public class CommandTesting extends CommandBase{
 //			world.setBlockState(player.getPosition(), Blocks.SAND.getDefaultState(), 2);
 //			BlockFalling.fallInstantly = oldValue;
 			
-			BlockPos down = player.getPosition().down();
-			if(world.isAirBlock(down)){
-				world.setBlockState(down, Blocks.NETHERRACK.getDefaultState(), 0);
-				world.setBlockState(player.getPosition(), Blocks.GRAVEL.getDefaultState(), 2);
-				world.setBlockState(down, Blocks.AIR.getDefaultState(), 0);
-			} else{
-				player.getEntityWorld().setBlockState(player.getPosition(), Blocks.GRAVEL.getDefaultState(), 2);
-			}
+			
+			System.out.println(world.getSpawnPoint()); // should be (8, 64, 8)
+			System.out.println(world.provider.getSpawnCoordinate());
+			System.out.println(world.provider.getRandomizedSpawnPoint());
+			System.out.println(world.provider.getRandomizedSpawnPoint());
+			
+//			BlockPos down = player.getPosition().down();
+//			if(world.isAirBlock(down)){
+//				world.setBlockState(down, Blocks.NETHERRACK.getDefaultState(), 0);
+//				world.setBlockState(player.getPosition(), Blocks.GRAVEL.getDefaultState(), 2);
+//				world.setBlockState(down, Blocks.AIR.getDefaultState(), 0);
+//			} else{
+//				player.getEntityWorld().setBlockState(player.getPosition(), Blocks.GRAVEL.getDefaultState(), 2);
+//			}
 		}
 		
 	}

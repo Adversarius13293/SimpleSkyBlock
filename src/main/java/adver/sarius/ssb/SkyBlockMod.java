@@ -1,8 +1,15 @@
 package adver.sarius.ssb;
 
 import net.minecraft.command.ServerCommandManager;
+import net.minecraft.entity.monster.EntityPolarBear;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.gen.ChunkProviderHell;
+import net.minecraft.world.gen.ChunkProviderOverworld;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,7 +19,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import adver.sarius.ssb.gen.SSBWorldGenerator;
+import adver.sarius.ssb.gen.WorldProviderHellSSB;
 import adver.sarius.ssb.gen.WorldProviderSurfaceSSB;
 import adver.sarius.ssb.gen.WorldTypeSSB;
 import adver.sarius.ssb.gen.structure.ComponentScatteredFeaturePiecesSSB;
@@ -22,9 +29,12 @@ import adver.sarius.ssb.gen.structure.StructureOceanMonumentPiecesSSB;
 import adver.sarius.ssb.gen.structure.StructureOceanMonumentSSB;
 import adver.sarius.ssb.gen.structure.StructureStrongholdPiecesSSB;
 import adver.sarius.ssb.handler.BoneMealHandler;
+import adver.sarius.ssb.handler.FossilGeneratorHandler;
 import adver.sarius.ssb.handler.HarvestDropsHandler;
 import adver.sarius.ssb.handler.LightningHandler;
 import adver.sarius.ssb.handler.LootTableHandler;
+import adver.sarius.ssb.handler.SpawnEggHandler;
+import adver.sarius.ssb.handler.SpawnPointHandler;
 import adver.sarius.ssb.proxy.CommonProxy;
 import adver.sarius.ssb.recipe.ModRecipes;
 import adver.sarius.ssb.villager.VillagerTradingChanger;
@@ -36,7 +46,7 @@ public class SkyBlockMod {
 	public static final String MODID = "simpleskyblock";
 	public static final String NAME = "SimpleSkyBlock";
 	public static final String VERSION = "1.0.0";
-	
+	public static final WorldTypeSSB WORLD_TYPE_SSB = new WorldTypeSSB("simpleSkyBlock");
 	@Mod.Instance(MODID)
 	public static SkyBlockMod instance;
 	
@@ -54,13 +64,16 @@ public class SkyBlockMod {
 		MinecraftForge.EVENT_BUS.register(new LightningHandler());
 		MinecraftForge.EVENT_BUS.register(new HarvestDropsHandler());
 		MinecraftForge.EVENT_BUS.register(new BoneMealHandler());
+		MinecraftForge.EVENT_BUS.register(new SpawnPointHandler());
+		MinecraftForge.EVENT_BUS.register(new SpawnEggHandler());
 		
-//		MinecraftForge.EVENT_BUS.register(new SSBWorldGenerator());
-		MinecraftForge.TERRAIN_GEN_BUS.register(new SSBWorldGenerator());
+		MinecraftForge.TERRAIN_GEN_BUS.register(new FossilGeneratorHandler());
 		
 		VillagerTradingChanger.registerVillager();
 		
-		WorldType worldType = new WorldTypeSSB("simpleskyblock");
+		WorldType worldType = WORLD_TYPE_SSB;
+		
+		net.minecraft.client.gui.GuiCreateWorld;
 		
 //		int dimId = DimensionManager.getNextFreeDimId();
 		DimensionType dimOver = DimensionType.register("OverworldSSB", "", 0, WorldProviderSurfaceSSB.class, true);
@@ -75,6 +88,11 @@ public class SkyBlockMod {
 		
 		MapGenStructureIO.registerStructure(MapGenScatteredFeatureSSB.Start.class, "TempleSSB");
 		ComponentScatteredFeaturePiecesSSB.registerScatteredFeaturePieces();
+//		ChunkProviderHell
+		// NETHER(-1, "Nether", "_nether", WorldProviderHell.class),
+		DimensionType dimHell = DimensionType.register("NetherSSB", "_nether", -1, WorldProviderHellSSB.class, true);
+		DimensionManager.unregisterDimension(-1);
+		DimensionManager.registerDimension(-1, dimHell);
 	}
 	
 	@Mod.EventHandler
@@ -96,7 +114,9 @@ public class SkyBlockMod {
 	// Doc
 	// Zeilenumbrueche '||' einheitlich 
 	// wenn ich mich in ein neues gebiet teleporte, ist da bis zum relogg ein falsches biome 
-	
+	// Nether Lava Oceans too big?
+	// increase performance by removing unneded decoration/generation, etc?
+
 	// Tuts:
 	// https://shadowfacts.net/tutorials/forge-modding-1102/
 	// http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/2720770-crare1s-minecraft-1-10-2-forge-modding-tutorial
