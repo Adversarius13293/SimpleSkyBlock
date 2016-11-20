@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SpawnPointHandler {
 
+	// only called once by server
 	@SubscribeEvent
 	public void onCreatingSpawnPoint(CreateSpawnPosition event){
 		if(event.getWorld().getWorldType() instanceof WorldTypeSSB){
@@ -24,7 +25,6 @@ public class SpawnPointHandler {
 	        List<Biome> list = biomeprovider.getBiomesToSpawnIn();
 	        Random random = new Random(worldIn.getSeed());
 	        BlockPos blockpos = biomeprovider.findBiomePosition(0, 0, 256, list, random);
-	        System.out.println("Biome: " + blockpos);
 	        int i = 8;
 	        int j = worldIn.provider.getAverageGroundLevel();
 	        int k = 8;

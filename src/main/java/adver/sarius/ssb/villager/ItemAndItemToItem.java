@@ -9,6 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
+/**
+ *  Allows trading of itemstacks for itemstacks, and not just emeralds.
+ */
 public class ItemAndItemToItem implements ITradeList{
 
     public ItemStack buyingItemStack;

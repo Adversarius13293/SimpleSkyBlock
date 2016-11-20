@@ -16,13 +16,14 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LootTableHandler {
-	
+
+	// called only once, so I guess its only server side
 	@SubscribeEvent
 	public void onLootTablesLoaded(LootTableLoadEvent event){
 		if (event.getName().equals(LootTableList.ENTITIES_CAVE_SPIDER)) {
 			// TODO: name already in use?
 			LootPool pool = new LootPool(new LootEntryItem[]{new LootEntryItem(Item.getItemFromBlock(Blocks.WEB), 1, 0, new LootFunction[0], new LootCondition[0], Blocks.WEB.getRegistryName().toString())}, 
-						new LootCondition[]{new KilledByPlayer(false), new RandomChanceWithLooting(0.925f, 0.01f)}, new RandomValueRange(1), new RandomValueRange(0), "pool2");
+						new LootCondition[]{new KilledByPlayer(false), new RandomChanceWithLooting(0.025f, 0.01f)}, new RandomValueRange(1), new RandomValueRange(0), "pool2");
 			event.getTable().addPool(pool);
 						
 		} else if(event.getName().equals(LootTableList.CHESTS_NETHER_BRIDGE)){

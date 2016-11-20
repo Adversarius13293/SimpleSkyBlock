@@ -1,15 +1,8 @@
 package adver.sarius.ssb;
 
-import net.minecraft.command.ServerCommandManager;
-import net.minecraft.entity.monster.EntityPolarBear;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.DimensionType;
-import net.minecraft.world.WorldProviderHell;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.gen.ChunkProviderHell;
-import net.minecraft.world.gen.ChunkProviderOverworld;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -39,23 +32,22 @@ import adver.sarius.ssb.proxy.CommonProxy;
 import adver.sarius.ssb.recipe.ModRecipes;
 import adver.sarius.ssb.villager.VillagerTradingChanger;
 
-@Mod(modid = SkyBlockMod.MODID, name = SkyBlockMod.NAME, 
-	version = SkyBlockMod.VERSION, acceptedMinecraftVersions = "[1.10.2]")
-public class SkyBlockMod {
+@Mod(modid = SimpleSkyBlockMod.MODID, name = SimpleSkyBlockMod.NAME, 
+	version = SimpleSkyBlockMod.VERSION, acceptedMinecraftVersions = "[1.10,)", dependencies = "required-after:Forge@[12.18.2.2099,)")
+public class SimpleSkyBlockMod {
 
 	public static final String MODID = "simpleskyblock";
 	public static final String NAME = "SimpleSkyBlock";
-	public static final String VERSION = "1.0.0";
+	public static final String VERSION = "${version}";
 	public static final WorldTypeSSB WORLD_TYPE_SSB = new WorldTypeSSB("simpleSkyBlock");
 	@Mod.Instance(MODID)
-	public static SkyBlockMod instance;
+	public static SimpleSkyBlockMod instance;
 	
 	@SidedProxy(serverSide = "adver.sarius.ssb.proxy.CommonProxy", clientSide="adver.sarius.ssb.proxy.ClientProxy")
 	public static CommonProxy proxy;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event){
-		System.out.println(NAME + " is loading,");
 	}
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
@@ -66,16 +58,25 @@ public class SkyBlockMod {
 		MinecraftForge.EVENT_BUS.register(new BoneMealHandler());
 		MinecraftForge.EVENT_BUS.register(new SpawnPointHandler());
 		MinecraftForge.EVENT_BUS.register(new SpawnEggHandler());
-		
 		MinecraftForge.TERRAIN_GEN_BUS.register(new FossilGeneratorHandler());
+//		MinecraftForge.EVENT_BUS.register(new GUIHandler()); // only on client side!
 		
 		VillagerTradingChanger.registerVillager();
-		
+		this.registerWorldType();
+	}
+	
+	@Mod.EventHandler
+	public void postInit(FMLPostInitializationEvent event){
+	}
+	
+	@Mod.EventHandler
+	public void serverStart(FMLServerStartingEvent event){
+//		((ServerCommandManager)event.getServer().getCommandManager()).registerCommand(new CommandTesting());
+	}
+	
+	private void registerWorldType(){
 		WorldType worldType = WORLD_TYPE_SSB;
 		
-		net.minecraft.client.gui.GuiCreateWorld;
-		
-//		int dimId = DimensionManager.getNextFreeDimId();
 		DimensionType dimOver = DimensionType.register("OverworldSSB", "", 0, WorldProviderSurfaceSSB.class, true);
 		DimensionManager.unregisterDimension(0);
 		DimensionManager.registerDimension(0, dimOver);
@@ -88,42 +89,13 @@ public class SkyBlockMod {
 		
 		MapGenStructureIO.registerStructure(MapGenScatteredFeatureSSB.Start.class, "TempleSSB");
 		ComponentScatteredFeaturePiecesSSB.registerScatteredFeaturePieces();
-//		ChunkProviderHell
-		// NETHER(-1, "Nether", "_nether", WorldProviderHell.class),
+		
 		DimensionType dimHell = DimensionType.register("NetherSSB", "_nether", -1, WorldProviderHellSSB.class, true);
 		DimensionManager.unregisterDimension(-1);
 		DimensionManager.registerDimension(-1, dimHell);
 	}
 	
-	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent event){
-
+	public static boolean useSSBGen(World world){
+		return world.getWorldType() == WORLD_TYPE_SSB;
 	}
-	
-	
-	@Mod.EventHandler
-	public void serverStart(FMLServerStartingEvent event){
-		((ServerCommandManager)event.getServer().getCommandManager()).registerCommand(new CommandTesting());
-	}
-	
-	// TODOs:
-	// ItemMonsterPlacer passt mobspawner an 
-	// Was ist mit ServerProxy?
-	// in en_US kann ich auch ein itemgroup.skyblock= angeben?!
-	// Kommentare einheitlich
-	// Doc
-	// Zeilenumbrueche '||' einheitlich 
-	// wenn ich mich in ein neues gebiet teleporte, ist da bis zum relogg ein falsches biome 
-	// Nether Lava Oceans too big?
-	// increase performance by removing unneded decoration/generation, etc?
-
-	// Tuts:
-	// https://shadowfacts.net/tutorials/forge-modding-1102/
-	// http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/2720770-crare1s-minecraft-1-10-2-forge-modding-tutorial
-	// http://bedrockminer.jimdo.com/modding-tutorials/
-	// http://jabelarminecraft.blogspot.de/p/minecraft-forge-172-event-handling.html
-	// http://tutorials.darkhax.net/mob-loot.html
-	// http://greyminecraftcoder.blogspot.de/2015/01/mining-blocks-with-tools.html
-	
-	// http://www.minecraftforge.net/forum/index.php?topic=40662.0
 }

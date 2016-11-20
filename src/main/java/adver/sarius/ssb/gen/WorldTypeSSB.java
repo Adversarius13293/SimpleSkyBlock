@@ -2,7 +2,6 @@ package adver.sarius.ssb.gen;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,7 +18,7 @@ public class WorldTypeSSB extends WorldType {
 		return new ChunkProviderOverworldSSB(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(), generatorOptions);
 	}
 	
-	/////////////////////////////////
+	///////////////////////////////// TODO: Implement own customization.
 	
 	/**
      * Called when the 'Customize' button is pressed on world creation GUI
@@ -30,14 +29,14 @@ public class WorldTypeSSB extends WorldType {
     @SideOnly(Side.CLIENT)
     public void onCustomizeButton(net.minecraft.client.Minecraft mc, net.minecraft.client.gui.GuiCreateWorld guiCreateWorld)
     {
-        if (this == WorldType.FLAT)
-        {
-            mc.displayGuiScreen(new net.minecraft.client.gui.GuiCreateFlatWorld(guiCreateWorld, guiCreateWorld.chunkProviderSettingsJson));
-        }
-        else if (this == WorldType.CUSTOMIZED)
-        {
-            mc.displayGuiScreen(new net.minecraft.client.gui.GuiCustomizeWorldScreen(guiCreateWorld, guiCreateWorld.chunkProviderSettingsJson));
-        }
+//        if (this == WorldType.FLAT)
+//        {
+//            mc.displayGuiScreen(new net.minecraft.client.gui.GuiCreateFlatWorld(guiCreateWorld, guiCreateWorld.chunkProviderSettingsJson));
+//        }
+//        else if (this == WorldType.CUSTOMIZED)
+//        {
+//            mc.displayGuiScreen(new net.minecraft.client.gui.GuiCustomizeWorldScreen(guiCreateWorld, guiCreateWorld.chunkProviderSettingsJson));
+//        }
     }
 
     /**
@@ -46,6 +45,6 @@ public class WorldTypeSSB extends WorldType {
      */
     public boolean isCustomizable()
     {
-    	return true;
+    	return false;
     }
 }

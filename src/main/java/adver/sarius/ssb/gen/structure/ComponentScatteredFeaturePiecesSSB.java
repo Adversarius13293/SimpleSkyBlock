@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
@@ -175,10 +174,6 @@ public class ComponentScatteredFeaturePiecesSSB
     
     public static class Igloo extends ComponentScatteredFeaturePiecesSSB.Feature
         {
-            private static final ResourceLocation IGLOO_TOP_ID = new ResourceLocation("igloo/igloo_top");
-            private static final ResourceLocation IGLOO_MIDDLE_ID = new ResourceLocation("igloo/igloo_middle");
-            private static final ResourceLocation IGLOO_BOTTOM_ID = new ResourceLocation("igloo/igloo_bottom");
-
             public Igloo()
             {
             }
@@ -190,11 +185,11 @@ public class ComponentScatteredFeaturePiecesSSB
 
             public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
-//                if (!this.offsetToAverageGroundLevel(worldIn, structureBoundingBoxIn, -1))
-//                {
-//                    return false;
-//                }
-                    return true;
+                if (!this.offsetToAverageGroundLevel(worldIn, structureBoundingBoxIn, -1))
+                {
+                    return false;
+                }
+                return true;
             }
         }
 

@@ -7,9 +7,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class LightningHandler {
 
 	//TODO: multiple calls for one guardian....
+	// only called by server
 	@SubscribeEvent
 	public void onLightningStrike(EntityStruckByLightningEvent event){
-		// only triggers on not remote
 		if(event.getEntity() instanceof EntityGuardian){
 			EntityGuardian guardian = ((EntityGuardian)event.getEntity());
 			guardian.setElder(true);

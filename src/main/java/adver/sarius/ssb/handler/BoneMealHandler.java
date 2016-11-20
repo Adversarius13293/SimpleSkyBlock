@@ -3,7 +3,6 @@ package adver.sarius.ssb.handler;
 import java.util.Random;
 
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -17,10 +16,11 @@ public class BoneMealHandler {
 	
 	private final Random random = new Random();
 	
+	// called twice, needs to be on server only to prevent ghost blocks
 	@SubscribeEvent
 	public void onBoneMealUse(BonemealEvent event){
 		World world = event.getWorld();
-		if(world.isRemote){ // doesnt work correctly otherwise. ghostblocks
+		if(world.isRemote){
 			return;
 		}
 		// taken from BlockGrass.grow()
@@ -34,10 +34,14 @@ public class BoneMealHandler {
 				while(true){
 					if(j >= i/16){
 						if(world.isAirBlock(position)){
-							// define chance
-							if(random.nextInt(40) == 0){
+							if(random.nextInt(30) == 0){
 								IBlockState blockState = Blocks.TALLGRASS.getStateFromMeta(BlockTallGrass.EnumType.FERN.getMeta());
 								if(Blocks.TALLGRASS.canBlockStay(world, position, blockState)){
+									world.setBlockState(position, blockState);
+								}
+							} else if(random.nextInt(30)==0){
+								IBlockState blockState = Blocks.DEADBUSH.getDefaultState();
+								if(Blocks.DEADBUSH.canBlockStay(world, position, blockState)){
 									world.setBlockState(position, blockState);
 								}
 							}
@@ -52,16 +56,6 @@ public class BoneMealHandler {
 						break;
 					}
 					j++;
-				}
-			}
-		} else if(event.getBlock().getBlock() instanceof BlockSand){
-			event.setResult(Result.ALLOW);
-			BlockPos position = event.getPos().up();
-			
-			if(random.nextInt(10) < 6){
-				IBlockState blockState = Blocks.DEADBUSH.getDefaultState();
-				if(Blocks.DEADBUSH.canBlockStay(world, position, blockState)){
-					world.setBlockState(position, blockState);
 				}
 			}
 		}

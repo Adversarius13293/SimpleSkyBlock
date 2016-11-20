@@ -1,6 +1,6 @@
 package adver.sarius.ssb.villager;
 
-import adver.sarius.ssb.SkyBlockMod;
+import adver.sarius.ssb.SimpleSkyBlockMod;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.entity.passive.EntityVillager;
@@ -19,7 +19,7 @@ public class VillagerTradingChanger {
 	public static void registerVillager(){
 
 		// TODO: change this for 1.11
-		VillagerProfession prof = new VillagerProfession(SkyBlockMod.MODID + ":nitwit",
+		VillagerProfession prof = new VillagerProfession(SimpleSkyBlockMod.MODID + ":nitwit",
                 "minecraft:textures/entity/villager/villager.png",
                 "minecraft:textures/entity/zombie_villager/zombie_villager.png");
 
@@ -53,6 +53,6 @@ public class VillagerTradingChanger {
 		career.addTrade(1, tradeSugar, tradeCactus, tradeCocoa);
 		career.addTrade(2, tradeSpruce, tradeBirch, tradeJungle, tradeAcacia, tradeDark);
 		career.addTrade(3, tradeSun, tradeLilac, tradeRose, tradePeony);
-		career.addTrade(4, tradeGrass);		
+		career.addTrade(4, tradeGrass);
 	}
 }

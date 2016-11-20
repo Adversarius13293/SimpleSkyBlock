@@ -10,7 +10,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSettings;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class WorldGeneratorSpawnIsland extends WorldGenerator{
@@ -36,7 +35,7 @@ public class WorldGeneratorSpawnIsland extends WorldGenerator{
 			
 			// dirt/grass
 			for (int z = 0; z < 4; z++) {
-				worldIn.setBlockState(position.add(0, -1, z), Blocks.GRASS.getDefaultState());
+				worldIn.setBlockState(position.add(0, -1, z), Blocks.GRASS.getDefaultState()); // TODO: Set grass under tree to dirt for consistency?
 				worldIn.setBlockState(position.add(0, -2, z), Blocks.DIRT.getDefaultState());
 			}
 			
@@ -72,14 +71,14 @@ public class WorldGeneratorSpawnIsland extends WorldGenerator{
 			}
 			
 			// starting chest
-			if (this.isBonusChestEnabled){
+//			if (this.isBonusChestEnabled){ // TODO: need to adjust the gui first.
 				worldIn.setBlockState(position.add(0, 0, 2), Blocks.CHEST.getDefaultState(), 3);
 	            TileEntity tileentity = worldIn.getTileEntity(position.add(0, 0, 2));
 	            if (tileentity instanceof TileEntityChest) {
 		            ((TileEntityChest)tileentity).setInventorySlotContents(0, new ItemStack(Blocks.ICE));
 		            ((TileEntityChest)tileentity).setInventorySlotContents(1, new ItemStack(Items.LAVA_BUCKET));
 	            }
-			}
+//			}
 			return true;
 		}
 	}

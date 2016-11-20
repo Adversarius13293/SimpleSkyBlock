@@ -8,7 +8,8 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HarvestDropsHandler {
-		
+
+	// only called once by server
 	@SubscribeEvent
 	public void onHarvestDrops(HarvestDropsEvent event){
 		// only triggers on not remote
