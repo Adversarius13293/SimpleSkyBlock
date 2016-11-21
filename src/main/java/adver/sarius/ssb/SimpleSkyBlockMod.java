@@ -12,6 +12,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import adver.sarius.ssb.gen.WorldProviderHellSSB;
 import adver.sarius.ssb.gen.WorldProviderSurfaceSSB;
 import adver.sarius.ssb.gen.WorldTypeSSB;
@@ -40,6 +45,8 @@ public class SimpleSkyBlockMod {
 	public static final String NAME = "SimpleSkyBlock";
 	public static final String VERSION = "${version}";
 	public static final WorldTypeSSB WORLD_TYPE_SSB = new WorldTypeSSB("simpleSkyBlock");
+	public static Logger logger;
+	
 	@Mod.Instance(MODID)
 	public static SimpleSkyBlockMod instance;
 	
@@ -48,9 +55,11 @@ public class SimpleSkyBlockMod {
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event){
+		logger = event.getModLog();
 	}
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
+		logger.info("Initializing mod ...");
 		ModRecipes.init();
 		MinecraftForge.EVENT_BUS.register(new LootTableHandler());
 		MinecraftForge.EVENT_BUS.register(new LightningHandler());

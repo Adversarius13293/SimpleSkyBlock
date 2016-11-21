@@ -24,8 +24,10 @@ public class VillagerTradingChanger {
                 "minecraft:textures/entity/zombie_villager/zombie_villager.png");
 
 		VillagerRegistry.instance().register(prof);
-		ITradeList tradeSugar = new EntityVillager.ItemAndEmeraldToItem(Items.SUGAR, new PriceInfo(4, 6), Items.REEDS, new PriceInfo(1, 1));
-		ITradeList tradeCactus = new EntityVillager.ListItemForEmeralds(Item.getItemFromBlock(Blocks.CACTUS), new PriceInfo(8, 12));
+		ITradeList tradeSugar = new EntityVillager.ItemAndEmeraldToItem(Items.SUGAR, new PriceInfo(5, 8), Items.REEDS, new PriceInfo(1, 1));
+//		ITradeList tradeCactus = new EntityVillager.ListItemForEmeralds(Item.getItemFromBlock(Blocks.CACTUS), new PriceInfo(8, 12));
+		ITradeList tradeCactus = new ItemAndItemToItem(new ItemStack(Blocks.CACTUS), new PriceInfo(1, 1), 
+				new ItemStack(Items.FISH, 1, 3), new PriceInfo(1, 1), new ItemStack(Items.EMERALD), new PriceInfo(4, 6));
 		ITradeList tradeCocoa = new ItemAndItemToItem(new ItemStack(Items.DYE, 1, 3), new PriceInfo(1, 1), 
 				new ItemStack(Blocks.WOOL, 1, 12), new PriceInfo(4, 4), new ItemStack(Items.EMERALD), new PriceInfo(1, 3));
 		ITradeList tradeGrass = new ItemAndItemToItem(new ItemStack(Blocks.GRASS), new PriceInfo(2, 2), 

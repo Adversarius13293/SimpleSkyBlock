@@ -20,7 +20,7 @@ public class ItemAndItemToItem implements ITradeList{
     public EntityVillager.PriceInfo sellingPriceInfo1;
     public ItemStack sellingItemstack2;
     public EntityVillager.PriceInfo sellingPriceInfo2;
-    
+    // TODO: re-order such that its consistent with class name
     public ItemAndItemToItem(ItemStack buyingItemStack,
 			PriceInfo buyingPriceInfo, ItemStack sellingItemstack1,
 			PriceInfo sellingPriceInfo1, ItemStack sellingItemstack2,

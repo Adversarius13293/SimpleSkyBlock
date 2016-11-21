@@ -38,16 +38,16 @@ public class ModRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.SAND, 1, 1), new ItemStack(Items.DYE, 1, 1), new ItemStack(Blocks.SAND, 1, 0));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.DIRT, 1, 2), "LL", "DD", 'L', "treeLeaves", 'D', dirt));
 		// Mushroom order is optional
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.MYCELIUM), "RB", "DD", 'R', Blocks.RED_MUSHROOM_BLOCK, 'B', Blocks.BROWN_MUSHROOM_BLOCK, 'D', Blocks.DIRT);
+		GameRegistry.addShapedRecipe(new ItemStack(Blocks.MYCELIUM), "RB", "DD", 'R', Blocks.RED_MUSHROOM_BLOCK, 'B', Blocks.BROWN_MUSHROOM_BLOCK, 'D', dirt);
 		
 		// Ores
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.EMERALD_ORE), "EEE","ESE","EEE", 'E', Blocks.EMERALD_BLOCK, 'S', stone);
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.LAPIS_ORE), "LLL","LSL","LLL", 'L', Blocks.LAPIS_BLOCK, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.COAL_ORE), "CCC","CSC","CCC", 'C', new ItemStack(Items.COAL, 1, 1) , 'S', stone);
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.GOLD_ORE), "GGG","GSG","GGG", 'G', Items.GOLD_INGOT, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.IRON_ORE), "III","ISI","III", 'I', Items.IRON_INGOT, 'S', stone);
+		GameRegistry.addShapedRecipe(new ItemStack(Blocks.GOLD_ORE), "GGG","GSG","GGG", 'G', Items.GOLD_INGOT, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.DIAMOND_ORE), "DDD","DSD","DDD", 'D', Items.DIAMOND, 'S', stone);
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.REDSTONE_ORE), "RRR","RSR","RRR", 'R', Items.REDSTONE, 'S', stone);
+		GameRegistry.addShapedRecipe(new ItemStack(Blocks.LAPIS_ORE), "LLL","LSL","LLL", 'L', Blocks.LAPIS_BLOCK, 'S', stone);
+		GameRegistry.addShapedRecipe(new ItemStack(Blocks.EMERALD_ORE), "EEE","ESE","EEE", 'E', Blocks.EMERALD_BLOCK, 'S', stone);
 	}
 
 	// see ItemMonsterPlacer.applyEntityIdToItemStack()

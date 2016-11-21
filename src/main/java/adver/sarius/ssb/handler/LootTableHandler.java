@@ -11,6 +11,7 @@ import net.minecraft.world.storage.loot.conditions.KilledByPlayer;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.conditions.RandomChanceWithLooting;
 import net.minecraft.world.storage.loot.functions.LootFunction;
+import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraft.world.storage.loot.functions.SetMetadata;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,6 +32,10 @@ public class LootTableHandler {
 			if(pool != null){
 				pool.addEntry(new LootEntryItem(Items.GOLDEN_APPLE, 1, 0, new LootFunction[]{
 						new SetMetadata(new LootCondition[0], new RandomValueRange(1))}, new LootCondition[0], Items.GOLDEN_APPLE.getRegistryName().toString()));
+				pool.addEntry(new LootEntryItem(Items.MELON_SEEDS, 10, 0, new LootFunction[]{
+						new SetCount(new LootCondition[0], new RandomValueRange(2, 4))}, new LootCondition[0], Items.MELON_SEEDS.getRegistryName().toString()));
+				pool.addEntry(new LootEntryItem(Items.PUMPKIN_SEEDS, 10, 0, new LootFunction[]{
+						new SetCount(new LootCondition[0], new RandomValueRange(2, 4))}, new LootCondition[0], Items.PUMPKIN_SEEDS.getRegistryName().toString()));
 			}
 		}
 	}
