@@ -38,7 +38,7 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
     public NoiseGeneratorOctaves scaleNoise;
     public NoiseGeneratorOctaves depthNoise;
     public NoiseGeneratorOctaves forestNoise;
-    private final World worldObj;
+    private final World world;
     private final boolean mapFeaturesEnabled;
     private final WorldType terrainType;
     private final double[] heightMap;
@@ -60,7 +60,7 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
             scatteredFeatureGenerator = (MapGenScatteredFeature)net.minecraftforge.event.terraingen.TerrainGen.getModdedMapGen(scatteredFeatureGenerator, net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE);
             oceanMonumentGenerator = (StructureOceanMonument)net.minecraftforge.event.terraingen.TerrainGen.getModdedMapGen(oceanMonumentGenerator, net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.OCEAN_MONUMENT);
         }
-        this.worldObj = worldIn;
+        this.world = worldIn;
         this.mapFeaturesEnabled = mapFeaturesEnabledIn;
         this.terrainType = worldIn.getWorldInfo().getTerrainType();
         this.rand = new Random(seed);
@@ -78,7 +78,7 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
         {
             for (int j = -2; j <= 2; ++j)
             {
-                float f = 10.0F / MathHelper.sqrt_float((float)(i * i + j * j) + 0.2F);
+                float f = 10.0F / MathHelper.sqrt((float)(i * i + j * j) + 0.2F);
                 this.biomeWeights[i + 2 + (j + 2) * 5] = f;
             }
         }
@@ -104,14 +104,14 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
     // only sets stone and water
     public void setBlocksInChunk(int x, int z, ChunkPrimer primer)
     {
-        this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
+        this.biomesForGeneration = this.world.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
         this.generateHeightmap(x * 4, 0, z * 4);
     }
 
     // sets biome specific blocks?
     public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, Biome[] biomesIn)
     {
-        if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, x, z, primer, this.worldObj)) return;
+        if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, x, z, primer, this.world)) return;
     }
 
     // create biomes and structures
@@ -120,30 +120,30 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
         this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
         ChunkPrimer chunkprimer = new ChunkPrimer();
         this.setBlocksInChunk(x, z, chunkprimer);
-        this.biomesForGeneration = this.worldObj.getBiomeProvider().loadBlockGeneratorData(this.biomesForGeneration, x * 16, z * 16, 16, 16);
+        this.biomesForGeneration = this.world.getBiomeProvider().getBiomes(this.biomesForGeneration, x * 16, z * 16, 16, 16);
         this.replaceBiomeBlocks(x, z, chunkprimer, this.biomesForGeneration);
 
         if (this.mapFeaturesEnabled)
         {
             if (this.settings.useStrongholds)
             {
-                this.strongholdGenerator.generate(this.worldObj, x, z, chunkprimer);
+                this.strongholdGenerator.generate(this.world, x, z, chunkprimer);
             }
 
             if (this.settings.useTemples)
             {
-                this.scatteredFeatureGenerator.generate(this.worldObj, x, z, chunkprimer);
+                this.scatteredFeatureGenerator.generate(this.world, x, z, chunkprimer);
             }
 
             if (this.settings.useMonuments)
             {
-                this.oceanMonumentGenerator.generate(this.worldObj, x, z, chunkprimer);
+                this.oceanMonumentGenerator.generate(this.world, x, z, chunkprimer);
             }
         }
         
         
 
-        Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
+        Chunk chunk = new Chunk(this.world, chunkprimer, x, z);
         // Needed to instantly use the correct biome
         byte[] abyte = chunk.getBiomeArray();
 
@@ -259,7 +259,7 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
                     double d2 = this.minLimitRegion[i] / (double)this.settings.lowerLimitScale;
                     double d3 = this.maxLimitRegion[i] / (double)this.settings.upperLimitScale;
                     double d4 = (this.mainNoiseRegion[i] / 10.0D + 1.0D) / 2.0D;
-                    double d5 = MathHelper.denormalizeClamp(d2, d3, d4) - d1;
+                    double d5 = MathHelper.clampedLerp(d2, d3, d4) - d1;
 
                     if (l1 > 29)
                     {
@@ -281,40 +281,40 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
         int i = x * 16;
         int j = z * 16;
         BlockPos blockpos = new BlockPos(i, 0, j);
-        Biome biome = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
-        this.rand.setSeed(this.worldObj.getSeed());
+        Biome biome = this.world.getBiome(blockpos.add(16, 0, 16));
+        this.rand.setSeed(this.world.getSeed());
         long k = this.rand.nextLong() / 2L * 2L + 1L;
         long l = this.rand.nextLong() / 2L * 2L + 1L;
-        this.rand.setSeed((long)x * k + (long)z * l ^ this.worldObj.getSeed());
+        this.rand.setSeed((long)x * k + (long)z * l ^ this.world.getSeed());
         boolean flag = false;
         ChunkPos chunkpos = new ChunkPos(x, z);
 
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, this.rand, x, z, flag);
+        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.world, this.rand, x, z, flag);
 
         if (this.mapFeaturesEnabled)
         {
             if (this.settings.useStrongholds)
             {
-                this.strongholdGenerator.generateStructure(this.worldObj, this.rand, chunkpos);
+                this.strongholdGenerator.generateStructure(this.world, this.rand, chunkpos);
             }
 
             if (this.settings.useTemples)
             {
-                this.scatteredFeatureGenerator.generateStructure(this.worldObj, this.rand, chunkpos);
+                this.scatteredFeatureGenerator.generateStructure(this.world, this.rand, chunkpos);
             }
 
             if (this.settings.useMonuments)
             {
-                this.oceanMonumentGenerator.generateStructure(this.worldObj, this.rand, chunkpos);
+                this.oceanMonumentGenerator.generateStructure(this.world, this.rand, chunkpos);
             }
         }
 
-        biome.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
-        WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, i + 8, j + 8, 16, 16, this.rand);
+        biome.decorate(this.world, this.rand, new BlockPos(i, 0, j));
+        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.world, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
+        WorldEntitySpawner.performWorldGenSpawning(this.world, biome, i + 8, j + 8, 16, 16, this.rand);
         blockpos = blockpos.add(8, 0, 8);
 
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.worldObj, this.rand, x, z, flag);
+        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, x, z, flag);
 
         BlockFalling.fallInstantly = false;
     }
@@ -326,7 +326,7 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
 
         if (this.settings.useMonuments && this.mapFeaturesEnabled && chunkIn.getInhabitedTime() < 3600L)
         {
-            flag |= this.oceanMonumentGenerator.generateStructure(this.worldObj, this.rand, new ChunkPos(x, z));
+            flag |= this.oceanMonumentGenerator.generateStructure(this.world, this.rand, new ChunkPos(x, z));
         }
 
         return flag;
@@ -334,7 +334,7 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
 
     public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos)
     {
-        Biome biome = this.worldObj.getBiomeGenForCoords(pos);
+        Biome biome = this.world.getBiome(pos);
 
         if (this.mapFeaturesEnabled)
         {
@@ -343,7 +343,7 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
                 return this.scatteredFeatureGenerator.getScatteredFeatureSpawnList();
             }
 
-            if (creatureType == EnumCreatureType.MONSTER && this.settings.useMonuments && this.oceanMonumentGenerator.isPositionInStructure(this.worldObj, pos))
+            if (creatureType == EnumCreatureType.MONSTER && this.settings.useMonuments && this.oceanMonumentGenerator.isPositionInStructure(this.world, pos))
             {
                 return this.oceanMonumentGenerator.getScatteredFeatureSpawnList();
             }
@@ -364,17 +364,17 @@ public class ChunkProviderOverworldSSB implements IChunkGenerator
         {
             if (this.settings.useStrongholds)
             {
-                this.strongholdGenerator.generate(this.worldObj, x, z, (ChunkPrimer)null);
+                this.strongholdGenerator.generate(this.world, x, z, (ChunkPrimer)null);
             }
 
             if (this.settings.useTemples)
             {
-                this.scatteredFeatureGenerator.generate(this.worldObj, x, z, (ChunkPrimer)null);
+                this.scatteredFeatureGenerator.generate(this.world, x, z, (ChunkPrimer)null);
             }
 
             if (this.settings.useMonuments)
             {
-                this.oceanMonumentGenerator.generate(this.worldObj, x, z, (ChunkPrimer)null);
+                this.oceanMonumentGenerator.generate(this.world, x, z, (ChunkPrimer)null);
             }
         }
     }

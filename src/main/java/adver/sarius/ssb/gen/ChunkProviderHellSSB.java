@@ -296,7 +296,7 @@ public class ChunkProviderHellSSB implements IChunkGenerator
         }
 
         Chunk chunk = new Chunk(this.world, chunkprimer, x, z);
-        Biome[] abiome = this.world.getBiomeProvider().loadBlockGeneratorData((Biome[])null, x * 16, z * 16, 16, 16);
+        Biome[] abiome = this.world.getBiomeProvider().getBiomes((Biome[])null, x * 16, z * 16, 16, 16);
         byte[] abyte = chunk.getBiomeArray();
 
         for (int i = 0; i < abyte.length; ++i)
@@ -384,7 +384,7 @@ public class ChunkProviderHellSSB implements IChunkGenerator
                     if ((double)k < 0.0D)
                     {
                         double d10 = (0.0D - (double)k) / 4.0D;
-                        d10 = MathHelper.clamp_double(d10, 0.0D, 1.0D);
+                        d10 = MathHelper.clamp(d10, 0.0D, 1.0D);
                         d8 = d8 * (1.0D - d10) + -10.0D * d10;
                     }
 
@@ -405,7 +405,7 @@ public class ChunkProviderHellSSB implements IChunkGenerator
         int i = x * 16;
         int j = z * 16;
         BlockPos blockpos = new BlockPos(i, 0, j);
-        Biome biome = this.world.getBiomeGenForCoords(blockpos.add(16, 0, 16));
+        Biome biome = this.world.getBiome(blockpos.add(16, 0, 16));
         ChunkPos chunkpos = new ChunkPos(x, z);
         this.genNetherBridge.generateStructure(this.world, this.rand, chunkpos);
 
@@ -504,7 +504,7 @@ public class ChunkProviderHellSSB implements IChunkGenerator
             }
         }
 
-        Biome biome = this.world.getBiomeGenForCoords(pos);
+        Biome biome = this.world.getBiome(pos);
         return biome.getSpawnableList(creatureType);
     }
 

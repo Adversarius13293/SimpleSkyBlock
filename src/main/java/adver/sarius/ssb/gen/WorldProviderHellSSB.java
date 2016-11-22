@@ -8,8 +8,8 @@ public class WorldProviderHellSSB extends WorldProviderHell{
 	
 	@Override
 	public IChunkGenerator createChunkGenerator(){
-		if(SimpleSkyBlockMod.useSSBGen(super.worldObj)){
-			return new ChunkProviderHellSSB(this.worldObj, this.worldObj.getWorldInfo().isMapFeaturesEnabled(), this.worldObj.getSeed());
+		if(SimpleSkyBlockMod.useSSBGen(super.world)){
+			return new ChunkProviderHellSSB(this.world, this.world.getWorldInfo().isMapFeaturesEnabled(), this.world.getSeed());
 		}else{
 			return super.createChunkGenerator();
         }

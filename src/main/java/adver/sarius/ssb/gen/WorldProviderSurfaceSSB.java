@@ -9,8 +9,8 @@ public class WorldProviderSurfaceSSB extends WorldProviderSurface {
 	@Override
 	public IChunkGenerator createChunkGenerator(){
 		// I am overriding the vanilla dimension. So I have to return the vanilla generator when generating normal worlds.
-		if(SimpleSkyBlockMod.useSSBGen(super.worldObj)){
-			return new ChunkProviderOverworldSSB(this.worldObj, this.getSeed(), this.worldObj.getWorldInfo().isMapFeaturesEnabled(), this.worldObj.getWorldInfo().getGeneratorOptions());
+		if(SimpleSkyBlockMod.useSSBGen(super.world)){
+			return new ChunkProviderOverworldSSB(this.world, this.getSeed(), this.world.getWorldInfo().isMapFeaturesEnabled(), this.world.getWorldInfo().getGeneratorOptions());
 		} else{
 			return super.createChunkGenerator();
 		}

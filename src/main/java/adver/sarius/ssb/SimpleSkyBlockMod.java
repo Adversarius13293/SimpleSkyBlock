@@ -13,8 +13,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import adver.sarius.ssb.gen.WorldProviderHellSSB;
@@ -38,7 +36,7 @@ import adver.sarius.ssb.recipe.ModRecipes;
 import adver.sarius.ssb.villager.VillagerTradingChanger;
 
 @Mod(modid = SimpleSkyBlockMod.MODID, name = SimpleSkyBlockMod.NAME, 
-	version = SimpleSkyBlockMod.VERSION, acceptedMinecraftVersions = "[1.10,)", dependencies = "required-after:Forge@[12.18.2.2099,)")
+	version = SimpleSkyBlockMod.VERSION, acceptedMinecraftVersions = "[1.10,)", dependencies = "required-after:Forge@[12.18.1.2039,)")
 public class SimpleSkyBlockMod {
 
 	public static final String MODID = "simpleskyblock";

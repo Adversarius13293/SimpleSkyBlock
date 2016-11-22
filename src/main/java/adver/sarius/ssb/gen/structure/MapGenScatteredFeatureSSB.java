@@ -15,7 +15,7 @@ public class MapGenScatteredFeatureSSB extends MapGenScatteredFeature {
 	@Override
 	protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new MapGenScatteredFeatureSSB.Start(this.worldObj, this.rand, chunkX, chunkZ);
+        return new MapGenScatteredFeatureSSB.Start(this.world, this.rand, chunkX, chunkZ);
     }
 	
 	@Override
@@ -42,7 +42,7 @@ public class MapGenScatteredFeatureSSB extends MapGenScatteredFeature {
 
         public Start(World worldIn, Random random, int chunkX, int chunkZ)
         {
-            this(worldIn, random, chunkX, chunkZ, worldIn.getBiomeGenForCoords(new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8)));
+            this(worldIn, random, chunkX, chunkZ, worldIn.getBiome(new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8)));
         }
 
         public Start(World worldIn, Random random, int chunkX, int chunkZ, Biome biomeIn)

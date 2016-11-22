@@ -17,7 +17,7 @@ public class MapGenStrongholdSSB extends MapGenStronghold {
         MapGenStrongholdSSB.Start mapgenstronghold$start;
 
         // init with start ; while not empty or no portal ; re-init
-        for (mapgenstronghold$start = new MapGenStrongholdSSB.Start(this.worldObj, this.rand, chunkX, chunkZ); mapgenstronghold$start.getComponents().isEmpty() || ((StructureStrongholdPiecesSSB.Stairs2)mapgenstronghold$start.getComponents().get(0)).strongholdPortalRoom == null; mapgenstronghold$start = new MapGenStrongholdSSB.Start(this.worldObj, this.rand, chunkX, chunkZ))
+        for (mapgenstronghold$start = new MapGenStrongholdSSB.Start(this.world, this.rand, chunkX, chunkZ); mapgenstronghold$start.getComponents().isEmpty() || ((StructureStrongholdPiecesSSB.Stairs2)mapgenstronghold$start.getComponents().get(0)).strongholdPortalRoom == null; mapgenstronghold$start = new MapGenStrongholdSSB.Start(this.world, this.rand, chunkX, chunkZ))
         {
             ;
         }

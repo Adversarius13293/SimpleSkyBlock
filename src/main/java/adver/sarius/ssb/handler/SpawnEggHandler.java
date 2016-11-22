@@ -21,7 +21,7 @@ public class SpawnEggHandler {
 				if(event.getItemStack() != null && event.getItemStack().getItem() == Items.SPAWN_EGG){
 					event.setUseItem(Result.DENY);
 					if(!event.getWorld().isRemote){
-						event.getEntityPlayer().addChatComponentMessage(new TextComponentString("[" + SimpleSkyBlockMod.NAME + "] You are not allowed to change spawners in the Nether."));
+						event.getEntityPlayer().sendMessage(new TextComponentString("[" + SimpleSkyBlockMod.NAME + "] You are not allowed to change spawners in the Nether."));
 					}
 				}
 			}

@@ -19,7 +19,7 @@ public class StructureOceanMonumentSSB extends StructureOceanMonument{
 	@Override
 	protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new StructureOceanMonumentSSB.StartMonument(this.worldObj, this.rand, chunkX, chunkZ);
+        return new StructureOceanMonumentSSB.StartMonument(this.world, this.rand, chunkX, chunkZ);
     }
 	
 	public static class StartMonument extends StructureStart
