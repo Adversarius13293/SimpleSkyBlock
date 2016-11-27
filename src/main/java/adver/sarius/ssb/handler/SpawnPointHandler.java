@@ -3,8 +3,6 @@ package adver.sarius.ssb.handler;
 import java.util.List;
 import java.util.Random;
 
-import adver.sarius.ssb.gen.WorldGeneratorSpawnIsland;
-import adver.sarius.ssb.gen.WorldTypeSSB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -12,6 +10,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraftforge.event.world.WorldEvent.CreateSpawnPosition;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import adver.sarius.ssb.gen.WorldGeneratorSpawnIsland;
+import adver.sarius.ssb.gen.WorldTypeSSB;
 
 public class SpawnPointHandler {
 

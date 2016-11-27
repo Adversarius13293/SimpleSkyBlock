@@ -2,7 +2,6 @@ package adver.sarius.ssb;
 
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldType;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +26,7 @@ import adver.sarius.ssb.gen.structure.StructureOceanMonumentSSB;
 import adver.sarius.ssb.gen.structure.StructureStrongholdPiecesSSB;
 import adver.sarius.ssb.handler.BoneMealHandler;
 import adver.sarius.ssb.handler.FossilGeneratorHandler;
+import adver.sarius.ssb.handler.GUIHandler;
 import adver.sarius.ssb.handler.HarvestDropsHandler;
 import adver.sarius.ssb.handler.LightningHandler;
 import adver.sarius.ssb.handler.LootTableHandler;
@@ -66,7 +67,9 @@ public class SimpleSkyBlockMod {
 		MinecraftForge.EVENT_BUS.register(new SpawnPointHandler());
 		MinecraftForge.EVENT_BUS.register(new SpawnEggHandler());
 		MinecraftForge.TERRAIN_GEN_BUS.register(new FossilGeneratorHandler());
-//		MinecraftForge.EVENT_BUS.register(new GUIHandler()); // only on client side!
+		if(event.getSide() == Side.CLIENT){ // TODO: Time for a proxy?
+			MinecraftForge.EVENT_BUS.register(new GUIHandler()); // do not call on dedicated server!
+		}		
 		
 		VillagerTradingChanger.registerVillager();
 		this.registerWorldType();
@@ -81,10 +84,8 @@ public class SimpleSkyBlockMod {
 //		((ServerCommandManager)event.getServer().getCommandManager()).registerCommand(new CommandTesting());
 	}
 	
-	private void registerWorldType(){
-		WorldType worldType = WORLD_TYPE_SSB;
-		
-		DimensionType dimOver = DimensionType.register("OverworldSSB", "", 0, WorldProviderSurfaceSSB.class, true);
+	private void registerWorldType(){		
+		DimensionType dimOver = DimensionType.register("Overworld", "", 0, WorldProviderSurfaceSSB.class, true);
 		DimensionManager.unregisterDimension(0);
 		DimensionManager.registerDimension(0, dimOver);
 
@@ -97,7 +98,7 @@ public class SimpleSkyBlockMod {
 		MapGenStructureIO.registerStructure(MapGenScatteredFeatureSSB.Start.class, "TempleSSB");
 		ComponentScatteredFeaturePiecesSSB.registerScatteredFeaturePieces();
 		
-		DimensionType dimHell = DimensionType.register("NetherSSB", "_nether", -1, WorldProviderHellSSB.class, true);
+		DimensionType dimHell = DimensionType.register("Nether", "_nether", -1, WorldProviderHellSSB.class, true);
 		DimensionManager.unregisterDimension(-1);
 		DimensionManager.registerDimension(-1, dimHell);
 	}

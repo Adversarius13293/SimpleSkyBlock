@@ -71,14 +71,14 @@ public class WorldGeneratorSpawnIsland extends WorldGenerator{
 			}
 			
 			// starting chest
-//			if (this.isBonusChestEnabled){ // TODO: need to adjust the gui first.
+			if (this.isBonusChestEnabled){
 				worldIn.setBlockState(position.add(0, 0, 2), Blocks.CHEST.getDefaultState(), 3);
 	            TileEntity tileentity = worldIn.getTileEntity(position.add(0, 0, 2));
 	            if (tileentity instanceof TileEntityChest) {
 		            ((TileEntityChest)tileentity).setInventorySlotContents(0, new ItemStack(Blocks.ICE));
 		            ((TileEntityChest)tileentity).setInventorySlotContents(1, new ItemStack(Items.LAVA_BUCKET));
 	            }
-//			}
+			}
 			return true;
 		}
 	}

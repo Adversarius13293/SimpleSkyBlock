@@ -1,5 +1,6 @@
 package adver.sarius.ssb.gen;
 
+import adver.sarius.ssb.gui.GuiCustomizeSSB;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkGenerator;
@@ -17,8 +18,9 @@ public class WorldTypeSSB extends WorldType {
 	public IChunkGenerator getChunkGenerator(World world, String generatorOptions) {
 		return new ChunkProviderOverworldSSB(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(), generatorOptions);
 	}
+	// Don't want to override getSpawnFuzz, because then you can't change it ingame via gamerules.
 	
-	///////////////////////////////// TODO: Implement own customization.
+	///////////////////////////////// TODO: Implement own customize.
 	
 	/**
      * Called when the 'Customize' button is pressed on world creation GUI
@@ -29,6 +31,8 @@ public class WorldTypeSSB extends WorldType {
     @SideOnly(Side.CLIENT)
     public void onCustomizeButton(net.minecraft.client.Minecraft mc, net.minecraft.client.gui.GuiCreateWorld guiCreateWorld)
     {
+//		mc.displayGuiScreen(new GuiCustomizeSSB(guiCreateWorld, guiCreateWorld.chunkProviderSettingsJson));
+		
 //        if (this == WorldType.FLAT)
 //        {
 //            mc.displayGuiScreen(new net.minecraft.client.gui.GuiCreateFlatWorld(guiCreateWorld, guiCreateWorld.chunkProviderSettingsJson));
