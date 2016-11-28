@@ -73,6 +73,7 @@ public class SimpleSkyBlockMod {
 		
 		VillagerTradingChanger.registerVillager();
 		this.registerWorldType();
+		System.out.println(VERSION);
 	}
 	
 	@Mod.EventHandler
@@ -81,7 +82,6 @@ public class SimpleSkyBlockMod {
 	
 	@Mod.EventHandler
 	public void serverStart(FMLServerStartingEvent event){
-//		((ServerCommandManager)event.getServer().getCommandManager()).registerCommand(new CommandTesting());
 	}
 	
 	private void registerWorldType(){		
