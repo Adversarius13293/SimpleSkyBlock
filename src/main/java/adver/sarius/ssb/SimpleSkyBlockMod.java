@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import org.apache.logging.log4j.Logger;
 
+import adver.sarius.ssb.config.SSBConfig;
 import adver.sarius.ssb.gen.WorldProviderHellSSB;
 import adver.sarius.ssb.gen.WorldProviderSurfaceSSB;
 import adver.sarius.ssb.gen.WorldTypeSSB;
@@ -36,8 +37,12 @@ import adver.sarius.ssb.proxy.CommonProxy;
 import adver.sarius.ssb.recipe.ModRecipes;
 import adver.sarius.ssb.villager.VillagerTradingChanger;
 
-@Mod(modid = SimpleSkyBlockMod.MODID, name = SimpleSkyBlockMod.NAME, 
-	version = SimpleSkyBlockMod.VERSION, acceptedMinecraftVersions = "[1.10,)", dependencies = "required-after:Forge@[12.18.1.2039,)")
+@Mod(modid = SimpleSkyBlockMod.MODID, 
+	name = SimpleSkyBlockMod.NAME, 
+	version = SimpleSkyBlockMod.VERSION, 
+	acceptedMinecraftVersions = "[1.10,)", 
+	dependencies = "required-after:Forge@[12.18.1.2039,)",
+	guiFactory = "adver.sarius.ssb.config.SSBGuiFactory")
 public class SimpleSkyBlockMod {
 
 	public static final String MODID = "simpleskyblock";
@@ -45,6 +50,7 @@ public class SimpleSkyBlockMod {
 	public static final String VERSION = "${version}";
 	public static final WorldTypeSSB WORLD_TYPE_SSB = new WorldTypeSSB("simpleSkyBlock");
 	public static Logger logger;
+	public static SSBConfig config;
 	
 	@Mod.Instance(MODID)
 	public static SimpleSkyBlockMod instance;
@@ -55,7 +61,9 @@ public class SimpleSkyBlockMod {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event){
 		logger = event.getModLog();
+		config = new SSBConfig(event);
 	}
+	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
 		logger.info("Initializing mod ...");
@@ -69,11 +77,11 @@ public class SimpleSkyBlockMod {
 		MinecraftForge.TERRAIN_GEN_BUS.register(new FossilGeneratorHandler());
 		if(event.getSide() == Side.CLIENT){ // TODO: Time for a proxy?
 			MinecraftForge.EVENT_BUS.register(new GUIHandler()); // do not call on dedicated server!
-		}		
+		}
+		MinecraftForge.EVENT_BUS.register(config);
 		
 		VillagerTradingChanger.registerVillager();
 		this.registerWorldType();
-		System.out.println(VERSION);
 	}
 	
 	@Mod.EventHandler

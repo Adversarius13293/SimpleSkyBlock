@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import adver.sarius.ssb.config.SSBConfig;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -272,9 +273,17 @@ public class ChunkProviderHellSSB implements IChunkGenerator
                     else
                     {
                     	if(j1 > 5){
-                            primer.setBlockState(k, j1, j, BEDROCK);                    		
-                    	} else{
-                            primer.setBlockState(k, j1, j, AIR);
+                    		if(SSBConfig.removeNetherCeiling){
+                    			primer.setBlockState(k, j1, j, AIR);
+                    		} else{
+                                primer.setBlockState(k, j1, j, BEDROCK);                    			
+                    		}                    		
+                    	} else {
+                    		if(SSBConfig.removeNetherFloor){
+                    			primer.setBlockState(k, j1, j, AIR);
+                    		} else{
+                                primer.setBlockState(k, j1, j, BEDROCK);                    			
+                    		}
                     	}
                     }
                 }

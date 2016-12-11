@@ -1,2 +1,5 @@
 entity.Villager.forester=Forester
 generator.simpleSkyBlock=SimpleSkyBlock
+
+ssb.config.gui.category.general=General
+ssb.config.gui.category.generation=Generation

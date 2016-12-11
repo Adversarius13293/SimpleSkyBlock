@@ -20,14 +20,15 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.0.1"
+version = "1.10.2-1.0.2"
 group = "adver.sarius.ssb" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "SimpleSkyBlock[1.10.2]"
+archivesBaseName = "SimpleSkyBlock"
 
 minecraft {
     version = "1.10.2-12.18.2.2151"
     runDir = "run"
 	replace '${version}', project.version
+	replaceIn "SimpleSkyBlockMod.java" 
     
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
