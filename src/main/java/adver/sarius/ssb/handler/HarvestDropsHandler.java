@@ -1,5 +1,6 @@
 package adver.sarius.ssb.handler;
 
+import adver.sarius.ssb.config.SSBConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemPickaxe;
@@ -13,7 +14,7 @@ public class HarvestDropsHandler {
 	@SubscribeEvent
 	public void onHarvestDrops(HarvestDropsEvent event){
 		// only triggers on not remote
-		if(event.getState().getBlock() == Blocks.GRAVEL && !event.isSilkTouching()){
+		if(event.getState().getBlock() == Blocks.GRAVEL && !event.isSilkTouching() && SSBConfig.enableGravelDropSand){
 			EntityPlayer player = event.getHarvester();
 			if(player != null){
 				ItemStack tool = player.getHeldItemMainhand();

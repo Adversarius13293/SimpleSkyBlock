@@ -22,6 +22,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
+import adver.sarius.ssb.config.SSBConfig;
 
 import com.google.common.collect.Lists;
 
@@ -345,7 +346,7 @@ public class StructureStrongholdPiecesSSB
 
             public static StructureBoundingBox findPieceBox(List<StructureComponent> p_175869_0_, Random p_175869_1_, int p_175869_2_, int p_175869_3_, int p_175869_4_, EnumFacing p_175869_5_)
             {
-                int i = 3;
+//                int i = 3;
                 StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175869_2_, p_175869_3_, p_175869_4_, -1, -1, 0, 5, 5, 4, p_175869_5_);
                 StructureComponent structurecomponent = StructureComponent.findIntersecting(p_175869_0_, structureboundingbox);
 
@@ -665,6 +666,9 @@ public class StructureStrongholdPiecesSSB
 
             public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
+            	if(!SSBConfig.createStrongholdPortalRoom){
+            		return true;
+            	}
                 this.fillWithRandomizedBlocks(worldIn, structureBoundingBoxIn, 0, 0, 0, 10, 7, 15, false, randomIn, StructureStrongholdPiecesSSB.STRONGHOLD_STONES);
                 this.placeDoor(worldIn, randomIn, structureBoundingBoxIn, StructureStrongholdPiecesSSB.Stronghold.Door.GRATES, 4, 1, 0);
                 int i = 6;

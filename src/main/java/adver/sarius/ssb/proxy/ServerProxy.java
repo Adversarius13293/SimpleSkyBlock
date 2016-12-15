@@ -2,8 +2,11 @@ package adver.sarius.ssb.proxy;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
-public class CommonProxy {
-	
+// Dedicated server
+public class ServerProxy extends CommonProxy{
+
+	@Override
 	public void init(FMLInitializationEvent event){
+		super.init(event);
 	}
 }

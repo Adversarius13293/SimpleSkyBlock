@@ -1,5 +1,6 @@
 package adver.sarius.ssb.handler;
 
+import adver.sarius.ssb.config.SSBConfig;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -21,13 +22,12 @@ public class LootTableHandler {
 	// called only once, so I guess its only server side
 	@SubscribeEvent
 	public void onLootTablesLoaded(LootTableLoadEvent event){
-		if (event.getName().equals(LootTableList.ENTITIES_CAVE_SPIDER)) {
+		if (event.getName().equals(LootTableList.ENTITIES_CAVE_SPIDER) && SSBConfig.enableCobWebDrop) {
 			// TODO: name already in use?
 			LootPool pool = new LootPool(new LootEntryItem[]{new LootEntryItem(Item.getItemFromBlock(Blocks.WEB), 1, 0, new LootFunction[0], new LootCondition[0], Blocks.WEB.getRegistryName().toString())}, 
 						new LootCondition[]{new KilledByPlayer(false), new RandomChanceWithLooting(0.025f, 0.01f)}, new RandomValueRange(1), new RandomValueRange(0), "pool2");
 			event.getTable().addPool(pool);
-						
-		} else if(event.getName().equals(LootTableList.CHESTS_NETHER_BRIDGE)){
+		} else if(event.getName().equals(LootTableList.CHESTS_NETHER_BRIDGE) && SSBConfig.enableNetherLootChange){
 			LootPool pool = event.getTable().getPool("main");
 			if(pool != null){
 				pool.addEntry(new LootEntryItem(Items.GOLDEN_APPLE, 1, 0, new LootFunction[]{

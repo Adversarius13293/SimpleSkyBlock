@@ -21,6 +21,7 @@ public class SSBGuiConfig extends GuiConfig{
 		List<IConfigElement> list = new ArrayList<IConfigElement>();
 		list.add(categoryElement(SSBConfig.CATEGORY_GENERAL, "General", "ssb.config.gui.category.general"));
 		list.add(categoryElement(SSBConfig.CATEGORY_GENERATION, "Generation", "sssb.config.gui.category.generation"));
+		list.add(categoryElement(SSBConfig.CATEGORY_MECHANICS, "Mechanics", "sssb.config.gui.category.mechanics"));
 		return list;
 	}
 	

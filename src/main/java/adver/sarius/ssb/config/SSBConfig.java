@@ -1,6 +1,7 @@
 package adver.sarius.ssb.config;
 
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,9 +17,10 @@ public class SSBConfig {
 		configFile = new Configuration(event.getSuggestedConfigurationFile());
 		syncConfig();
 	}
-	
-	public static final String CATEGORY_GENERATION = "generation";
+
 	public static final String CATEGORY_GENERAL = Configuration.CATEGORY_GENERAL;
+	public static final String CATEGORY_GENERATION = "generation";
+	public static final String CATEGORY_MECHANICS = "mechanics";
 	
 	public static boolean disableNetherSpawnerChange = true;
 	public static boolean forceBonusChest = false;
@@ -27,16 +29,52 @@ public class SSBConfig {
 	public static boolean useDefaultNether = false;
 	public static boolean removeNetherFloor = true;
 	public static boolean removeNetherCeiling = false;
+	public static boolean createStrongholdPortalRoom = true;
+	
+	public static boolean enableCraftingRecipes = true;
+	public static boolean enableForesterVillager = true;
+	public static boolean enableGravelDropSand = true;
+	public static boolean enableBoneMealOnPodzol = true;
+	public static boolean enableGuardianLightning = true;
+	public static boolean enableCobWebDrop = true;
+	public static boolean enableNetherLootChange = true;
 	
 	private static void syncConfig(){
-		// TODO: setRequiresMinecraftStart?
-		disableNetherSpawnerChange = configFile.getBoolean("Disable Nether Spawner Change", CATEGORY_GENERAL, true, "Disable the possibility to change mob spawner in the Nether. Since you can only have blaze spawners there in vanilla.");
-		forceBonusChest = configFile.getBoolean("Force Bonus Chest", CATEGORY_GENERAL, false, "Always create the starting bonus chest. This option is mostly for server maps, which can't use the create world gui.");
-		spawnIslandSize = configFile.getInt("Spawn Island Size", CATEGORY_GENERAL, 2, 0, 3, "Size of the starting island, ranging from 0 to 3. Value 0 will disable the island generation.");
+		Property prop = configFile.get(CATEGORY_GENERAL, "Disable Nether Spawner Change", true, "Disable the possibility to change mob spawner in the Nether. Since you can only have blaze spawners there in vanilla.");
+		disableNetherSpawnerChange = prop.getBoolean();
+		prop = configFile.get(CATEGORY_GENERAL, "Force Bonus Chest", false, "Always create the starting bonus chest. This option is mostly for server maps, which can't use the create world gui.");
+		forceBonusChest = prop.getBoolean();
+		prop = configFile.get(CATEGORY_GENERAL, "Spawn Island Size", 2, "Size of the starting island, ranging from 0 to 3. Value 0 will disable the island generation.", 0, 3);
+		spawnIslandSize = prop.getInt();
 
-		useDefaultNether = configFile.getBoolean("Use Default Nether", CATEGORY_GENERATION, false, "Disable the SSB world generation for the Nether and use the default generation. Overrides Nether bedrock options. You need to reload the Nether, if you are changing this option while playing!");
-		removeNetherFloor = configFile.getBoolean("Remove Nether Floor", CATEGORY_GENERATION, true, "Remove the bedrock floor of the Nether.");
-		removeNetherCeiling = configFile.getBoolean("Remove Nether Ceiling", CATEGORY_GENERATION, false, "Remove the bedrock ceiling of the Nether.");
+		prop = configFile.get(CATEGORY_GENERATION, "Use Default Nether", false, "Disable the SSB world generation for the Nether and use the default generation. Overrides Nether bedrock options.");
+		useDefaultNether = prop.getBoolean();
+		prop.setRequiresWorldRestart(true);
+		prop = configFile.get(CATEGORY_GENERATION, "Remove Nether Floor", true, "Remove the bedrock floor of the Nether. (Only for SSB Nether)");
+		removeNetherFloor = prop.getBoolean();
+		prop = configFile.get(CATEGORY_GENERATION, "Remove Nether Ceiling", false, "Remove the bedrock ceiling of the Nether. (Only for SSB Nether)");
+		removeNetherCeiling = prop.getBoolean();
+		prop = configFile.get(CATEGORY_GENERATION, "Create Stronghold Portal Room", true, "Create the stronghold portal room. If set to false, nothing of the stronghold will be created.");
+		createStrongholdPortalRoom = prop.getBoolean();
+		
+		prop = configFile.get(CATEGORY_MECHANICS, "Enable Crafting Recipes", true, "Enable the additional SSB crafting recipes.");
+		enableCraftingRecipes = prop.getBoolean();
+		prop.setRequiresMcRestart(true);
+		prop = configFile.get(CATEGORY_MECHANICS, "Enable Forester Villager", true, "Enable the green villager and his SSB recipes.");
+		enableForesterVillager = prop.getBoolean();
+		prop.setRequiresMcRestart(true);
+		prop = configFile.get(CATEGORY_MECHANICS, "Enable Gravel Drop Sand", true, "Gravel drops sand when mined with an pickaxe.");
+		enableGravelDropSand = prop.getBoolean();
+		prop = configFile.get(CATEGORY_MECHANICS, "Enable Bone Meal on Podzol", true, "Use bone meal on podzol for ferns and dead bushes.");
+		enableBoneMealOnPodzol = prop.getBoolean();
+		prop = configFile.get(CATEGORY_MECHANICS, "Enable Guardian Lightning", true, "Guardians struck by lightning will turn into elder guardians.");
+		enableGuardianLightning = prop.getBoolean();
+		prop = configFile.get(CATEGORY_MECHANICS, "Enable Cob Web Drop", true, "Cave spiders can drop cob webs when killed by player.");
+		enableCobWebDrop = prop.getBoolean();
+		prop.setRequiresWorldRestart(true);
+		prop = configFile.get(CATEGORY_MECHANICS, "Enable Nether Loot Change", true, "Extend the loot table of nether fortress chest with some items.");
+		enableNetherLootChange = prop.getBoolean();
+		prop.setRequiresWorldRestart(true);
 		
 		if(configFile.hasChanged()){
 			configFile.save();

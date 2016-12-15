@@ -2,6 +2,7 @@ package adver.sarius.ssb.handler;
 
 import java.util.Random;
 
+import adver.sarius.ssb.config.SSBConfig;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +26,8 @@ public class BoneMealHandler {
 		}
 		// taken from BlockGrass.grow()
 		if(event.getBlock().getBlock() instanceof BlockDirt && 
-				event.getBlock().getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.PODZOL){
+				event.getBlock().getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.PODZOL && 
+				SSBConfig.enableBoneMealOnPodzol){
 			event.setResult(Result.ALLOW);
 			
 			for(int i = 0; i < 128; i++){

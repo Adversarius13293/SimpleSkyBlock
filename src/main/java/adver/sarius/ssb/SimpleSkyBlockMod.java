@@ -55,7 +55,7 @@ public class SimpleSkyBlockMod {
 	@Mod.Instance(MODID)
 	public static SimpleSkyBlockMod instance;
 	
-	@SidedProxy(serverSide = "adver.sarius.ssb.proxy.CommonProxy", clientSide="adver.sarius.ssb.proxy.ClientProxy")
+	@SidedProxy(serverSide = "adver.sarius.ssb.proxy.ServerProxy", clientSide="adver.sarius.ssb.proxy.ClientProxy")
 	public static CommonProxy proxy;
 	
 	@Mod.EventHandler
@@ -67,7 +67,6 @@ public class SimpleSkyBlockMod {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
 		logger.info("Initializing mod ...");
-		ModRecipes.init();
 		MinecraftForge.EVENT_BUS.register(new LootTableHandler());
 		MinecraftForge.EVENT_BUS.register(new LightningHandler());
 		MinecraftForge.EVENT_BUS.register(new HarvestDropsHandler());
@@ -79,8 +78,12 @@ public class SimpleSkyBlockMod {
 			MinecraftForge.EVENT_BUS.register(new GUIHandler()); // do not call on dedicated server!
 		}
 		MinecraftForge.EVENT_BUS.register(config);
-		
-		VillagerTradingChanger.registerVillager();
+		if(SSBConfig.enableCraftingRecipes){
+			ModRecipes.init();			
+		}
+		if(SSBConfig.enableForesterVillager){
+			VillagerTradingChanger.registerVillager();
+		}
 		this.registerWorldType();
 	}
 	
