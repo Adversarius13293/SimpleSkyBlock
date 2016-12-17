@@ -7,16 +7,17 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import adver.sarius.ssb.SimpleSkyBlockMod;
 
-// TODO: I don't like this this construct of a constructor and the static class... 
-// But I also don't want a static class which has to be initialized first.
 public class SSBConfig {
 
 	static Configuration configFile;
+	/** Needs resync after disconnecting from multiplayer. **/
+	public static boolean needsResync = true;
 	
 	public SSBConfig(FMLPreInitializationEvent event){
 		configFile = new Configuration(event.getSuggestedConfigurationFile());
 		syncConfig();
 	}
+	
 
 	public static final String CATEGORY_GENERAL = Configuration.CATEGORY_GENERAL;
 	public static final String CATEGORY_GENERATION = "generation";
@@ -39,7 +40,7 @@ public class SSBConfig {
 	public static boolean enableCobWebDrop = true;
 	public static boolean enableNetherLootChange = true;
 	
-	private static void syncConfig(){
+	public static void syncConfig(){
 		Property prop = configFile.get(CATEGORY_GENERAL, "Disable Nether Spawner Change", true, "Disable the possibility to change mob spawner in the Nether. Since you can only have blaze spawners there in vanilla.");
 		disableNetherSpawnerChange = prop.getBoolean();
 		prop = configFile.get(CATEGORY_GENERAL, "Force Bonus Chest", false, "Always create the starting bonus chest. This option is mostly for server maps, which can't use the create world gui.");
@@ -60,9 +61,9 @@ public class SSBConfig {
 		prop = configFile.get(CATEGORY_MECHANICS, "Enable Crafting Recipes", true, "Enable the additional SSB crafting recipes.");
 		enableCraftingRecipes = prop.getBoolean();
 		prop.setRequiresMcRestart(true);
-		prop = configFile.get(CATEGORY_MECHANICS, "Enable Forester Villager", true, "Enable the green villager and his SSB recipes.");
+		prop = configFile.get(CATEGORY_MECHANICS, "Enable Forester Villager", true, "Enable the green villager and his SSB recipes. Disabling this will convert already spawned forester into random villagers!");
 		enableForesterVillager = prop.getBoolean();
-		prop.setRequiresMcRestart(true);
+		prop.setRequiresWorldRestart(true);
 		prop = configFile.get(CATEGORY_MECHANICS, "Enable Gravel Drop Sand", true, "Gravel drops sand when mined with an pickaxe.");
 		enableGravelDropSand = prop.getBoolean();
 		prop = configFile.get(CATEGORY_MECHANICS, "Enable Bone Meal on Podzol", true, "Use bone meal on podzol for ferns and dead bushes.");
@@ -75,12 +76,13 @@ public class SSBConfig {
 		prop = configFile.get(CATEGORY_MECHANICS, "Enable Nether Loot Change", true, "Extend the loot table of nether fortress chest with some items.");
 		enableNetherLootChange = prop.getBoolean();
 		prop.setRequiresWorldRestart(true);
-		
 		if(configFile.hasChanged()){
 			configFile.save();
 		}
+		needsResync = false;
 	}
 	
+	// Fired only client side from gui
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event){
 		if(event.getModID().equals(SimpleSkyBlockMod.MODID)){

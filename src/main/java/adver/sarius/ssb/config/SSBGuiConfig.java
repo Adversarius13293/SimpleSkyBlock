@@ -25,6 +25,7 @@ public class SSBGuiConfig extends GuiConfig{
 		return list;
 	}
 	
+	// TODO: This looks complicated, find a cleaner version
 	/** Creates a button linking to another screen where all options of the category are available */
     private static IConfigElement categoryElement(String category, String name, String tooltipKey) {
         return new DummyConfigElement.DummyCategoryElement(name, tooltipKey,

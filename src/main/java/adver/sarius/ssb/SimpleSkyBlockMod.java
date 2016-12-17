@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
 import org.apache.logging.log4j.Logger;
@@ -33,6 +35,9 @@ import adver.sarius.ssb.handler.LightningHandler;
 import adver.sarius.ssb.handler.LootTableHandler;
 import adver.sarius.ssb.handler.SpawnEggHandler;
 import adver.sarius.ssb.handler.SpawnPointHandler;
+import adver.sarius.ssb.handler.VillagerSpawningHandler;
+import adver.sarius.ssb.network.ConfigPacket;
+import adver.sarius.ssb.network.LoginHandler;
 import adver.sarius.ssb.proxy.CommonProxy;
 import adver.sarius.ssb.recipe.ModRecipes;
 import adver.sarius.ssb.villager.VillagerTradingChanger;
@@ -62,7 +67,11 @@ public class SimpleSkyBlockMod {
 	public void preInit(FMLPreInitializationEvent event){
 		logger = event.getModLog();
 		config = new SSBConfig(event);
+		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+		network.registerMessage(ConfigPacket.Handler.class, ConfigPacket.class, 0, Side.CLIENT);
 	}
+	
+	public static SimpleNetworkWrapper network;
 	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
@@ -73,17 +82,16 @@ public class SimpleSkyBlockMod {
 		MinecraftForge.EVENT_BUS.register(new BoneMealHandler());
 		MinecraftForge.EVENT_BUS.register(new SpawnPointHandler());
 		MinecraftForge.EVENT_BUS.register(new SpawnEggHandler());
+		MinecraftForge.EVENT_BUS.register(new VillagerSpawningHandler());
+		MinecraftForge.EVENT_BUS.register(new LoginHandler()); // split into proxy?
 		MinecraftForge.TERRAIN_GEN_BUS.register(new FossilGeneratorHandler());
+		MinecraftForge.EVENT_BUS.register(config);
 		if(event.getSide() == Side.CLIENT){ // TODO: Time for a proxy?
 			MinecraftForge.EVENT_BUS.register(new GUIHandler()); // do not call on dedicated server!
 		}
-		MinecraftForge.EVENT_BUS.register(config);
-		if(SSBConfig.enableCraftingRecipes){
-			ModRecipes.init();			
-		}
-		if(SSBConfig.enableForesterVillager){
-			VillagerTradingChanger.registerVillager();
-		}
+		
+		ModRecipes.init();
+		VillagerTradingChanger.registerVillager();
 		this.registerWorldType();
 	}
 	
