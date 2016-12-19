@@ -20,12 +20,12 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.10.2-1.0.3"
+version = "1.10.2-1.1.0"
 group = "adver.sarius.ssb" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "SimpleSkyBlock"
 
 minecraft {
-    version = "1.10.2-12.18.2.2151"
+    version = "1.10.2-12.18.3.2185"
     runDir = "run"
 	replace '${version}', project.version
 	replaceIn "SimpleSkyBlockMod.java" 

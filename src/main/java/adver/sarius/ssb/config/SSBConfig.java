@@ -17,7 +17,6 @@ public class SSBConfig {
 		configFile = new Configuration(event.getSuggestedConfigurationFile());
 		syncConfig();
 	}
-	
 
 	public static final String CATEGORY_GENERAL = Configuration.CATEGORY_GENERAL;
 	public static final String CATEGORY_GENERATION = "generation";
@@ -43,6 +42,7 @@ public class SSBConfig {
 	public static void syncConfig(){
 		Property prop = configFile.get(CATEGORY_GENERAL, "Disable Nether Spawner Change", true, "Disable the possibility to change mob spawner in the Nether. Since you can only have blaze spawners there in vanilla.");
 		disableNetherSpawnerChange = prop.getBoolean();
+		prop.setRequiresWorldRestart(true); // just to prevent changes in multiplayer
 		prop = configFile.get(CATEGORY_GENERAL, "Force Bonus Chest", false, "Always create the starting bonus chest. This option is mostly for server maps, which can't use the create world gui.");
 		forceBonusChest = prop.getBoolean();
 		prop = configFile.get(CATEGORY_GENERAL, "Spawn Island Size", 2, "Size of the starting island, ranging from 0 to 3. Value 0 will disable the island generation.", 0, 3);
